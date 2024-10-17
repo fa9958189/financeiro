@@ -9,7 +9,7 @@
 }
 
 body {
-  background-color: #f7f7f7;
+  background-color: #000; /* Fundo preto */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,6 +17,10 @@ body {
   min-height: 100vh;
   margin: 0;
   font-family: 'Lato', sans-serif;
+}
+
+h1, h2, h3, h4, p, label {
+  color: #fff; /* Textos brancos */
 }
 
 .container {
@@ -80,6 +84,8 @@ label {
 
 input[type='text'],
 input[type='number'] {
+  background-color: #333; /* Fundo dos inputs mais escuro */
+  color: #fff; /* Texto dos inputs em branco */
   border: 1px solid #dedede;
   border-radius: 2px;
   display: block;
@@ -118,9 +124,10 @@ input[type='number'] {
   color: #333;
   display: flex;
   justify-content: space-between;
-  position: relative;
+  align-items: center; /* Alinha o conteúdo verticalmente */
   padding: 10px;
   margin: 10px 0;
+  position: relative;
 }
 
 .transactions li.plus {
@@ -131,22 +138,18 @@ input[type='number'] {
   border-right: 5px solid #c0392b;
 }
 
-.delete-btn {
-  cursor: pointer;
-  background-color: #e74c3c;
-  border: 0;
-  color: #fff;
-  font-size: 20px;
-  line-height: 20px;
-  padding: 2px 5px;
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translate(-100%, -50%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+.transactions li span {
+  flex-grow: 1; /* Faz o valor expandir o máximo possível, empurrando o botão para a direita */
+  text-align: right; /* Garante que o valor fique alinhado à direita */
 }
 
-.transactions li:hover .delete-btn {
-  opacity: 1;
+.delete-btn {
+  background-color: #ff4d4d;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 5px;
+  margin-left: 10px; /* Adiciona espaço entre o valor e o botão */
 }
