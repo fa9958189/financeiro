@@ -5,21 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./style.css" />
     <title>Controle de despesas</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
     <h2>Controle de despesas</h2>
 
+    <button onclick="window.location.href = 'dizimistas.html';" class="btn">Ver Dizimistas</button>
+    <button onclick="window.location.href = 'gastos.html';" class="btn">Ver Gastos</button>
+
     <div class="container">
       <h4>Saldo atual</h4>
-      
       <h1 id="balance" class="balance">R$ 0.00</h1>
+
+      <h3>Fracionamento</h3>
+      <table class="fraction-table">
+        <tr>
+          <th>Igreja (50%)</th>
+          <th>Matriz (10%)</th>
+          <th>Prebenda (40%)</th>
+        </tr>
+        <tr>
+          <td id="igreja-value" class="fraction-value">R$ 0.00</td>
+          <td id="matriz-value" class="fraction-value">R$ 0.00</td>
+          <td id="prebenda-value" class="fraction-value">R$ 0.00</td>
+        </tr>
+      </table>
 
       <div class="inc-exp-container">
         <div>
           <h4>Receitas</h4>
           <p id="money-plus" class="money plus">+ R$0.00</p>
         </div>
-
         <div>
           <h4>Despesas</h4>
           <p id="money-minus" class="money minus">- R$0.00</p>
@@ -27,12 +43,9 @@
       </div>
 
       <h3>Transações</h3>
-      
-      <ul id="transactions" class="transactions">
-      </ul>
+      <ul id="transactions" class="transactions"></ul>
 
       <h3>Adicionar transação</h3>
-      
       <form id="form">
         <div class="form-control">
           <label for="text">Nome</label>
@@ -48,6 +61,9 @@
 
         <button class="btn">Adicionar</button>
       </form>
+
+      <h3>Resumo Gráfico</h3>
+      <canvas id="pieChart" width="300" height="300"></canvas>
     </div>
 
     <script src="script.js"></script>

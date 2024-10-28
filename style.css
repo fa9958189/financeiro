@@ -153,3 +153,57 @@ input[type='number'] {
   padding: 5px;
   margin-left: 10px; /* Adiciona espaço entre o valor e o botão */
 }
+
+canvas {
+  display: block;
+  margin: 20px auto;
+}
+
+#pieChart {
+  max-width: 300px;
+  max-height: 300px;
+}
+
+.fraction-table {
+  width: 100%;
+  margin: 20px 0;
+  border-collapse: collapse;
+  background-color: #222;
+  color: #fff;
+  box-shadow: var(--box-shadow);
+}
+
+.fraction-table th,
+.fraction-table td {
+  padding: 10px;
+  text-align: center;
+}
+
+.fraction-table th {
+  border-bottom: 1px solid #555;
+}
+
+.fraction-table td.fraction-value {
+  font-size: 18px;
+  font-weight: bold;
+  color: #2e75cc;
+}
+
+.gastos-table {
+  width: 100%;
+  margin: 20px 0;
+  border-collapse: collapse;
+  background-color: #222;
+  color: #fff;
+}
+
+.gastos-table th,
+.gastos-table td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #555;
+}
+
+.fraction-value {
+  color: #2e75cc; /* Para os valores da fração */
+}

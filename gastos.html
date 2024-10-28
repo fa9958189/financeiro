@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Lista de Gastos</title>
+  </head>
+  <body>
+    <h2>Lista de Gastos</h2>
+    
+    <div class="container">
+      <h3>Detalhes dos Gastos</h3>
+      <table class="gastos-table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Valor</th>
+          </tr>
+        </thead>
+        <tbody id="gastos-list"></tbody>
+      </table>
+      <button onclick="window.location.href = 'index.html';" class="btn">Voltar ao Controle de Despesas</button>
+    </div>
+
+    <script>
+      // Função para exibir os gastos na tabela
+      function displayGastos() {
+        const gastosList = document.getElementById('gastos-list');
+        const storedTransactions = JSON.parse(localStorage.getItem('transactions')) || [];
+
+        // Filtrando apenas os gastos
+        const gastos = storedTransactions.filter(trans => trans.amount < 0);
+
+        // Limpando o conteúdo anterior
+        gastosList.innerHTML = '';
+
+        // Adicionando os gastos à tabela
+        gastos.forEach(trans => {
+          const row = document.createElement('tr');
+          const nomeCell = document.createElement('td');
+          const valorCell = document.createElement('td');
+
+          nomeCell.textContent = trans.name;
+          valorCell.textContent = `R$ ${Math.abs(trans.amount).toFixed(2)}`; // Exibe o valor absoluto
+
+          row.appendChild(nomeCell);
+          row.appendChild(valorCell);
+          gastosList.appendChild(row);
+        });
+      }
+
+      // Chama a função ao carregar a página
+      window.onload = displayGastos;
+    </script>
+  </body>
+</html>
