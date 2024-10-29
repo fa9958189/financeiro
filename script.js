@@ -128,6 +128,11 @@ const fecharMes = () => {
     fechamentos.push(fechamentoData);
     localStorage.setItem('fechamentos', JSON.stringify(fechamentos));
 
+    // Limpa as transações do armazenamento local
+    localStorage.removeItem('transactions');
+    transactions = []; // Limpa o array de transações
+    init(); // Atualiza a interface para refletir as mudanças
+
     alert(`Fechamento de ${mesAno} realizado com sucesso!`);
 };
 
@@ -210,10 +215,7 @@ const carregarDizimistas = () => {
     });
 };
 
-// Chama carregarDizimistas apenas se estivermos na página correta
-if (document.title === 'Dizimistas') {
-    carregarDizimistas();
-}
-
-// Chama init para a página principal
+// Inicia a página correspondente
 init();
+carregarFechamentos();
+carregarDizimistas();
