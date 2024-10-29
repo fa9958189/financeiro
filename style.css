@@ -207,3 +207,7 @@ canvas {
 .fraction-value {
   color: #2e75cc; /* Para os valores da fração */
 }
+#fechamento-dizimistas,
+#fechamento-gastos {
+  color: white;
+}

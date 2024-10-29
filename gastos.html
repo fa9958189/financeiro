@@ -8,8 +8,6 @@
 </head>
 <body>
     <h2>Lista de Gastos</h2>
-    
-    <button onclick="window.location.href = 'index.html';" class="btn">Voltar para o Controle de Despesas</button>
 
     <div class="container">
         <h3>Distribuição da Igreja (50%)</h3>
@@ -28,6 +26,11 @@
         
         <h3>Total de Gastos</h3>
         <p id="total-gastos">R$ 0.00</p>
+
+        <h3>Saldo da Igreja</h3>
+        <p id="saldo-igreja">R$ 0.00</p>
+
+        <button onclick="window.location.href = 'index.html';" class="btn">Voltar para o Controle de Despesas</button>
     </div>
 
     <script>
@@ -49,22 +52,26 @@
                 const valorCell = document.createElement('td');
 
                 nomeCell.textContent = trans.name;
-                valorCell.textContent = `R$ ${Math.abs(trans.amount).toFixed(2)}`; // Exibe o valor absoluto
+                valorCell.textContent = `R$ ${Math.abs(trans.amount).toFixed(2)}`;
 
                 row.appendChild(nomeCell);
                 row.appendChild(valorCell);
                 gastosList.appendChild(row);
 
-                totalGastos += Math.abs(trans.amount); // Soma os gastos
+                totalGastos += Math.abs(trans.amount);
             });
 
             // Exibindo o total de gastos
             document.getElementById('total-gastos').textContent = `Total: R$ ${totalGastos.toFixed(2)}`;
 
             // Cálculo da distribuição da Igreja (50%)
-            const totalAmount = storedTransactions.reduce((acc, trans) => acc + trans.amount, 0); // Total de todas as transações
+            const totalAmount = storedTransactions.reduce((acc, trans) => acc + trans.amount, 0);
             const igrejaValue = (totalAmount * 0.50).toFixed(2);
             document.getElementById('igreja-distribuicao').textContent = `R$ ${igrejaValue}`;
+
+            // Cálculo do saldo da igreja
+            const saldoIgreja = (igrejaValue - totalGastos).toFixed(2);
+            document.getElementById('saldo-igreja').textContent = `R$ ${saldoIgreja}`;
         }
 
         // Chama a função ao carregar a página

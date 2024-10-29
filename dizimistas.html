@@ -1,24 +1,55 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./style.css" />
     <title>Dizimistas - Controle de Despesas</title>
-  </head>
-  <body>
+</head>
+<body>
     <h2>Lista de Dizimistas</h2>
     
     <div class="container">
-      <h3>Transações com saldo positivo</h3>
-      <ul id="positive-transactions" class="transactions"></ul>
-      
-      <button onclick="window.location.href = 'index.html';" class="btn">Voltar ao Controle de Despesas</button>
+        <h3>Transações com saldo positivo</h3>
+        <table class="gastos-table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody id="positive-transactions"></tbody>
+        </table>
+
+        <button onclick="window.location.href = 'index.html';" class="btn">Voltar ao Controle de Despesas</button>
     </div>
     
     <script src="script.js"></script>
     <script>
-      document.addEventListener('DOMContentLoaded', displayPositiveTransactions);
+        document.addEventListener('DOMContentLoaded', () => {
+            const dizimistasList = document.getElementById('positive-transactions');
+            const storedTransactions = JSON.parse(localStorage.getItem('transactions')) || [];
+
+            // Filtrando apenas as transações positivas
+            const dizimistas = storedTransactions.filter(trans => trans.amount > 0);
+
+            // Limpando o conteúdo anterior
+            dizimistasList.innerHTML = '';
+
+            // Adicionando os dizimistas à tabela
+            dizimistas.forEach(trans => {
+                const row = document.createElement('tr');
+                const nomeCell = document.createElement('td');
+                const valorCell = document.createElement('td');
+
+                nomeCell.textContent = trans.name;
+                valorCell.textContent = `R$ ${trans.amount.toFixed(2)}`;
+
+                row.appendChild(nomeCell);
+                row.appendChild(valorCell);
+                dizimistasList.appendChild(row);
+            });
+        });
     </script>
-  </body>
+</body>
 </html>

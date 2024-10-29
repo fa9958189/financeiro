@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fechamento Mensal</title>
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .month {
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .month.closed {
+            background-color: #2ecc71;
+            color: white;
+        }
+        .month.open {
+            background-color: #c0392b;
+            color: white;
+        }
+        #detalhes-fechamento {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Fechamentos Mensais</h2>
+
+    <!-- Calendário dos meses -->
+    <div class="calendar" id="calendar">
+        <!-- Meses vão ser carregados aqui via JavaScript -->
+    </div>
+
+    <!-- Detalhes do Fechamento -->
+    <div id="detalhes-fechamento">
+        <h3>Detalhes do Fechamento</h3>
+        <p id="igreja-distribuicao"></p>
+        <p id="matriz-distribuicao"></p>
+        <p id="prebenda-distribuicao"></p>
+        <p id="total-gastos"></p>
+        <p id="saldo-igreja"></p>
+        
+        <h3>Dizimistas</h3>
+        <ul id="fechamento-dizimistas"></ul>
+        
+        <h3>Gastos</h3>
+        <ul id="fechamento-gastos"></ul>
+    </div>
+
+    <script>
+        const meses = [
+            "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+            "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+        ];
+
+        function carregarCalendario() {
+            const calendar = document.getElementById('calendar');
+            const fechamentos = JSON.parse(localStorage.getItem('fechamentos')) || [];
+
+            meses.forEach((mes, index) => {
+                const mesAno = `${mes} 2024`;
+                const fechamento = fechamentos.find(f => f.mesAno === mesAno);
+
+                const monthDiv = document.createElement('div');
+                monthDiv.classList.add('month');
+                monthDiv.classList.add(fechamento ? 'closed' : 'open');
+                monthDiv.textContent = mes;
+                monthDiv.addEventListener('click', () => {
+                    if (fechamento) {
+                        exibirDetalhesFechamento(fechamento);
+                    } else {
+                        alert(`${mesAno} ainda está aberto.`);
+                    }
+                });
+
+                const status = document.createElement('p');
+                status.textContent = fechamento ? 'Fechado' : 'Aberto';
+                monthDiv.appendChild(status);
+
+                calendar.appendChild(monthDiv);
+            });
+        }
+
+        function exibirDetalhesFechamento(fechamento) {
+            document.getElementById('igreja-distribuicao').textContent = `Igreja (50%): R$ ${fechamento.igrejaValue}`;
+            document.getElementById('matriz-distribuicao').textContent = `Matriz (10%): R$ ${fechamento.matrizValue}`;
+            document.getElementById('prebenda-distribuicao').textContent = `Prebenda (40%): R$ ${fechamento.prebendaValue}`;
+            document.getElementById('total-gastos').textContent = `Total de Gastos: R$ ${fechamento.totalGastos}`;
+            document.getElementById('saldo-igreja').textContent = `Saldo da Igreja: R$ ${fechamento.saldoIgreja}`;
+
+            const dizimistasList = document.getElementById('fechamento-dizimistas');
+            dizimistasList.innerHTML = '';
+            fechamento.dizimistas.forEach(trans => {
+                const li = document.createElement('li');
+                li.textContent = `${trans.name}: R$ ${trans.amount.toFixed(2)}`;
+                dizimistasList.appendChild(li);
+            });
+
+            const gastosList = document.getElementById('fechamento-gastos');
+            gastosList.innerHTML = '';
+            fechamento.gastos.forEach(trans => {
+                const li = document.createElement('li');
+                li.textContent = `${trans.name}: R$ ${Math.abs(trans.amount).toFixed(2)}`;
+                gastosList.appendChild(li);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', carregarCalendario);
+    </script>
+</body>
+</html>
