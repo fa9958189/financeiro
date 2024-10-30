@@ -128,12 +128,12 @@ const fecharMes = () => {
     fechamentos.push(fechamentoData);
     localStorage.setItem('fechamentos', JSON.stringify(fechamentos));
 
-    // Limpa as transações do armazenamento local
-    localStorage.removeItem('transactions');
-    transactions = []; // Limpa o array de transações
-    init(); // Atualiza a interface para refletir as mudanças
+    // Limpa transações após salvar o fechamento
+    transactions = [];
+    updateLocalStorage();
+    init(); // Atualiza o DOM para refletir a lista vazia
 
-    alert(`Fechamento de ${mesAno} realizado com sucesso!`);
+    alert(`Fechamento de ${mesAno} realizado com sucesso e transações limpas!`);
 };
 
 // Botão para fechar o mês, caso esteja na página principal
@@ -215,7 +215,52 @@ const carregarDizimistas = () => {
     });
 };
 
-// Inicia a página correspondente
+// Inicializa a aplicação ao carregar a página
 init();
-carregarFechamentos();
-carregarDizimistas();
+
+ // Dados para o gráfico de pizza
+ const ctx = document.getElementById('graficoPizza').getContext('2d');
+ const graficoPizza = new Chart(ctx, {
+     type: 'pie',
+     data: {
+         labels: ['Igreja', 'Matriz', 'Prebenda'],
+         datasets: [{
+             data: [50, 10, 40],
+             backgroundColor: ['#4CAF50', '#FFC107', '#FF5722']
+         }]
+     },
+     options: {
+         responsive: true,
+         plugins: {
+             legend: {
+                 position: 'top',
+             },
+             tooltip: {
+                 callbacks: {
+                     label: function(context) {
+                         return `${context.label}: ${context.raw}%`;
+                     }
+                 }
+             }
+         }
+     }
+ });
+
+ // Função para adicionar transações (exemplo)
+ function adicionarTransacao(nome, valor) {
+     const lista = document.getElementById('lista-transacoes');
+     const item = document.createElement('li');
+     item.textContent = `${nome}: R$ ${valor}`;
+     lista.appendChild(item);
+ }
+
+ // Função para limpar transações ao fechar o mês
+ document.getElementById('fechar-mes').addEventListener('click', function() {
+     const lista = document.getElementById('lista-transacoes');
+     lista.innerHTML = ''; // Limpa a lista de transações
+     alert('Mês fechado e transações limpas.');
+ });
+
+ // Exemplo de transações
+ adicionarTransacao('Dízimo', -100);
+ adicionarTransacao('Oferta', -200);

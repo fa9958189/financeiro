@@ -65,33 +65,13 @@
 
       <button id="fechar-mes-btn">Fechar Mês</button>
 
-      <h3>Resumo Gráfico</h3>
-      <canvas id="pieChart" width="300" height="300"></canvas>
+      <section id="resumo-grafico">
+        <h2>Resumo Gráfico</h2>
+        <canvas id="graficoPizza" width="400" height="400"></canvas>
+    </section>
+
     </div>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const ctx = document.getElementById('pieChart').getContext('2d');
-        new Chart(ctx, {
-          type: 'pie',
-          data: {
-            labels: ['Igreja (50%)', 'Matriz (10%)', 'Prebenda (40%)'],
-            datasets: [{
-              data: [50, 10, 40],
-              backgroundColor: ['#3498db', '#2ecc71', '#e74c3c'],
-              borderWidth: 1
-            }]
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              legend: {
-                position: 'top'
-              }
-            }
-          }
-        });
-      });
-    </script>
+    <script src="script.js"></script>
   </body>
 </html>
